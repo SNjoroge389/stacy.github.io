@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clock Widget</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Live Clock Widget</h2>
+
+    <div id="clock-container">
+      <h1 id="clock">Loading...</h1>
+      <select id="timezone-select"></select>
+    </div>
+
+    <div class="controls">
+      <button id="toggle-mode">Toggle Dark/Light</button>
+
+      <label for="theme-picker">Choose Theme:</label>
+      <select id="theme-picker">
+        <option value="default">Default</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+      </select>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
