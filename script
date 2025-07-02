@@ -1,0 +1,61 @@
+const clock = document.getElementById('clock');
+const timezoneSelect = document.getElementById('timezone-select');
+const toggleButton = document.getElementById('toggle-mode');
+const themePicker = document.getElementById('theme-picker');
+
+// Populate time zone selector
+function populateTimezones() {
+  const timezones = Intl.supportedValuesOf('timeZone');
+  timezones.forEach(tz => {
+    const option = document.createElement('option');
+    option.value = tz;
+    option.textContent = tz;
+    timezoneSelect.appendChild(option);
+  });
+}
+
+// Update the clock every second
+function updateClock() {
+  const tz = timezoneSelect.value || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const now = new Date().toLocaleTimeString('en-US', { timeZone: tz });
+  clock.textContent = now;
+}
+
+// Save selected time zone
+timezoneSelect.addEventListener('change', () => {
+  localStorage.setItem('selectedTimeZone', timezoneSelect.value);
+});
+
+// Toggle dark/light mode
+toggleButton.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const mode = document.body.classList.contains('dark') ? 'dark' : 'light';
+  localStorage.setItem('themeMode', mode);
+});
+
+// Change theme
+themePicker.addEventListener('change', () => {
+  document.body.dataset.theme = themePicker.value;
+  localStorage.setItem('userTheme', themePicker.value);
+});
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+  populateTimezones();
+
+  const savedTZ = localStorage.getItem('selectedTimeZone');
+  if (savedTZ) timezoneSelect.value = savedTZ;
+
+  const savedMode = localStorage.getItem('themeMode');
+  if (savedMode === 'dark') document.body.classList.add('dark');
+
+  const savedTheme = localStorage.getItem('userTheme');
+  if (savedTheme) {
+    document.body.dataset.theme = savedTheme;
+    themePicker.value = savedTheme;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+});
+
